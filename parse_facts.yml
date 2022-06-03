@@ -1,0 +1,132 @@
+---
+
+- name: Network Basic Demos
+  hosts: all
+  gather_facts: false
+  connection: local
+  tasks:
+    - include_vars: main.yml
+
+    - name: IOS gatthering facts
+      block:
+      - name: IOS facts
+        cisco.ios.ios_facts:
+          gather_subset:
+            - hardware
+          gather_network_resources:
+            - "interfaces"
+            - "l2_interfaces"
+            - "l3_interfaces"
+            - "acl_interfaces"
+            - "static_routes" 
+            - "acls" 
+        register: _ios_facts
+        become: true
+      - name: Debug IOS facts
+        debug:
+          var: _ios_facts
+          verbosity: 2
+      - name: Set IOS facts
+        set_fact:
+          _facts: "{{ _ios_facts }}"
+      when: ansible_network_os == 'ios'
+      tags: facts
+
+    - name: NXOS gatthering facts
+      block:
+      - name: NXOS facts
+        cisco.nxos.nxos_facts:
+          gather_subset:
+            - hardware
+          gather_network_resources:
+            - "interfaces"
+            - "l2_interfaces"
+            - "l3_interfaces"
+            - "acl_interfaces"
+            - "static_routes" 
+            - "acls" 
+        register: _nxos_facts
+        become: true
+      - name: Debug NXOS facts
+        debug:
+          var: _nxos_facts
+          verbosity: 2
+      - name: Set NXOS facts
+        set_fact:
+          _facts: "{{ _nxos_facts }}"
+      when: ansible_network_os == 'nxos'
+      tags: facts
+
+    - name: EOS gatthering facts
+      block:
+      - name: EOS facts
+        arista.eos.eos_facts:
+          gather_subset:
+            - hardware
+          gather_network_resources:
+            - all
+        register: _eos_facts
+        become: true
+      - name: Debug EOS facts
+        debug:
+          var: _eos_facts
+          verbosity: 2
+      - name: Set EOS facts
+        set_fact:
+          _facts: "{{ _eos_facts }}"
+      when: ansible_network_os == 'eos'
+      tags: facts
+
+    - name: NETBOX Push Inventory
+      block:
+      - name: Make sure device type is configured
+        netbox.netbox.netbox_device_type:
+          netbox_url: "{{ net_netbox_url }}"
+          netbox_token: "{{ net_netbox_token }}"
+          validate_certs: no
+          data: 
+            model: "{{ _facts.ansible_facts.ansible_net_system | default('unknown') }}"
+            manufacturer: "{% if ansible_network_os == 'eos' %}arista{% else %}cisco{% endif %}"
+            slug: "{{ _facts.ansible_facts.ansible_net_system | default('unknown') }}"
+        throttle: 1
+      - name: Push device inventory data to netbox
+        netbox.netbox.netbox_device:
+          netbox_url: "{{ net_netbox_url }}"
+          netbox_token: "{{ net_netbox_token }}"
+          validate_certs: no
+          data: 
+            name: "{{ inventory_hostname }}"
+            site: "{{ net_site }}"
+            serial: "{{ _facts.ansible_facts.ansible_net_serialnum | default(omit) }}"
+            device_type: "{{ _facts.ansible_facts.ansible_net_system | default('unknown') }}"
+            device_role: "{{ net_device_role }}"
+            local_context_data: "{{ _facts.ansible_facts.ansible_network_resources }}"
+            comments: "added by Ansible"
+      - name: Push interfaces inventory data to netbox
+        netbox.netbox.netbox_device_interface:
+          netbox_url: "{{ net_netbox_url }}"
+          netbox_token: "{{ net_netbox_token }}"
+          validate_certs: no
+          data: 
+            device: "{{ inventory_hostname }}"
+            name: "{{ item.name }}"
+            type: "Virtual"
+            description: "{{ item.name }} description"
+          state: present
+        loop: "{{ _facts.ansible_facts.ansible_network_resources.interfaces }}"
+      - name: Push IPv4 addresses inventory data to netbox
+        netbox.netbox.netbox_ip_address:
+          netbox_url: "{{ net_netbox_url }}"
+          netbox_token: "{{ net_netbox_token }}"
+          validate_certs: no
+          data: 
+            assigned_object:
+              device: "{{ inventory_hostname }}"
+              name: "{{ item.name }}"
+            family: 4
+            address: "{{ item.ipv4[0].address }}"
+            description: "{{ item.ipv4[0].address }} description"
+          state: present
+        loop: "{{ _facts.ansible_facts.ansible_network_resources.l3_interfaces }}"
+        when: item.ipv4 is defined and item.ipv4[0].address != ""
+      tags: netbox

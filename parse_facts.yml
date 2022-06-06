@@ -133,10 +133,9 @@
           data: 
             site: "{{ site }}"
             name: "{{ item.name }}"
-            status: "{{ item.state }}"
             vid: "{{ item.vlan_id }}"
-            custom_fields: 
-              device: "{{ inventory_hostname }}"
+            status: "{{ item.state }}"
+            device: "{{ inventory_hostname }}"
           state: present
         loop: "{{ _facts.ansible_facts.ansible_network_resources.vlans }}"
         when: item is defined

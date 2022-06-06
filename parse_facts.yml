@@ -139,4 +139,4 @@
               device: "{{ inventory_hostname }}"
           state: present
         loop: "{{ _facts.ansible_facts.ansible_network_resources.vlans }}"
-        when: item.vlans is defined
+        when: item is defined

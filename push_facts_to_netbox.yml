@@ -7,7 +7,8 @@
   tasks:
     - include_vars: main.yml
 
-    - debug:
+    - name: Debug facts to push to Netbox
+      debug:
         var: _facts
 
     - name: Push data to Netbox
@@ -72,6 +73,7 @@
             site: "{{ site }}"
             name: "{{ item.name }}"
             vid: "{{ item.vlan_id }}"
+            vlan_group: "{{ inventory_hostname }}"
           state: present
         loop: "{{ _facts.ansible_facts.ansible_network_resources.vlans }}"
         when: item is defined

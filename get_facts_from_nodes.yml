@@ -1,7 +1,7 @@
 ---
 
 - name: Collect Cisco IOS, NXOS and Arista EOS Facts
-  hosts: all
+  hosts: network
   gather_facts: false
   tasks:
     - include_vars: main.yml
@@ -78,6 +78,6 @@
       copy:
         content: "{{ _facts }}"
         dest: "/tmp/facts-{{ inventory_hostname }}.conf"
-      delegate_to: '172.16.1.34'
+      delegate_to: controller
       become: yes
 

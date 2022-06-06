@@ -75,7 +75,7 @@
       when: ansible_network_os == 'eos'
 
     - name: Include vault quay.io credentials
-      include_vars: vault_controller.txt
+      include_vars: files/vault_controller.txt
 
     - name: Store facts to a file
       copy:

@@ -7,9 +7,6 @@
   tasks:
     - include_vars: main.yml
 
-    - name: Include vault quay.io credentials
-      include_vars: files/vault_controller.txt
-
     - name: Get facts from a file
       copy:
         dest: "/tmp/facts-{{ inventory_hostname }}.conf"

@@ -74,7 +74,7 @@
           _facts: "{{ _eos_facts }}"
       when: ansible_network_os == 'eos'
 
-    - name: Include vault quay.io credentials
+    - name: Include vault controller credentials
       include_vars: files/vault_controller.txt
       delegate_to: controller
 

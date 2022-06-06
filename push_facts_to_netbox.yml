@@ -14,7 +14,7 @@
       slurp:
         src: "/tmp/facts-{{ item }}.conf"
       register: _facts_{{ item }}
-      loop: "{{ _files }}"
+      loop: "{{ _files.files }}"
 
     - name: Set facts
       set_fact:

@@ -82,5 +82,4 @@
         content: "{{ _facts }}"
         dest: "/tmp/facts-{{ inventory_hostname }}.conf"
       delegate_to: controller
-      become: yes
 

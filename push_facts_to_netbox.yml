@@ -5,7 +5,7 @@
   tasks:
     - name: Find AAP backup files
       find:
-        paths: ""/tmp/"
+        paths: "/tmp/"
         patterns: "facts-*"
         file_type: any
       register: _files

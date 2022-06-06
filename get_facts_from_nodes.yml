@@ -1,7 +1,7 @@
 ---
 
 - name: Collect Cisco IOS, NXOS and Arista EOS Facts
-  hosts: network
+  hosts: all
   gather_facts: false
   tasks:
     - include_vars: main.yml

@@ -1,7 +1,7 @@
 ---
 
 - name: Push Cisco IOS, NXOS and Arista EOS Facts to Netbox
-  hosts: network
+  hosts: all
   gather_facts: false
   connection: local
   tasks:

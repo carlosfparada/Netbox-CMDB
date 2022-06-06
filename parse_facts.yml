@@ -1,6 +1,6 @@
 ---
 
-- name: Network Basic Demos
+- name: Parse Cisco IOS, NXOS and Arista EOS Facts
   hosts: all
   gather_facts: false
   connection: local

@@ -7,6 +7,10 @@
   tasks:
     - include_vars: main.yml
 
+
+    - debug:
+        var: hostvar.controller
+
     - name: Get facts from a file
       copy:
         dest: "/tmp/facts-{{ inventory_hostname }}.conf"

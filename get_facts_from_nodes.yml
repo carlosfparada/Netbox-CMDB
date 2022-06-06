@@ -80,7 +80,7 @@
     - name: Store facts to a file
       vars: 
         ansible_user: "{{ ansible_user }}"
-        ansible_ssh_pass: "{{ ansible_ssh_user }}"
+        ansible_ssh_pass: "{{ ansible_ssh_user }}"\
       copy:
         content: "{{ _facts }}"
         dest: "/tmp/facts-{{ inventory_hostname }}.conf"

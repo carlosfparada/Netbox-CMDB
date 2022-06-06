@@ -76,4 +76,6 @@
       copy:
         content: "{{ _facts }}"
         dest: "/tmp/facts-{{ inventory_hostname }}.conf"
-      delegate_to: localhost
+      delegate_to: 172.16.1.34
+      become: yes
+

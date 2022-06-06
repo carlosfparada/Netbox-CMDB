@@ -11,8 +11,9 @@
       copy:
         dest: "/tmp/facts-{{ inventory_hostname }}.conf"
         content: "{{ _facts }}"
-      delegate_to: localhost
-      
+      delegate_to: 172.16.1.34
+      become: yes
+
     - name: Push data to Netbox
       block:
       - name: Push device type data to Netbox

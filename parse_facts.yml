@@ -73,7 +73,7 @@
 
     - name: NETBOX Push Inventory
       block:
-      - name: Make sure device type is configured
+      - name: Push device type data to Netbox
         netbox.netbox.netbox_device_type:
           netbox_url: "{{ net_netbox_url }}"
           netbox_token: "{{ net_netbox_token }}"
@@ -83,7 +83,7 @@
             manufacturer: "{% if ansible_network_os == 'eos' %}arista{% else %}cisco{% endif %}"
             slug: "{{ _facts.ansible_facts.ansible_net_system | default('unknown') }}"
         throttle: 1
-      - name: Push device inventory data to netbox
+      - name: Push device inventory data to Netbox
         netbox.netbox.netbox_device:
           netbox_url: "{{ net_netbox_url }}"
           netbox_token: "{{ net_netbox_token }}"

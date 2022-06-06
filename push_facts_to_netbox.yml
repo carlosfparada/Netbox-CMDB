@@ -13,7 +13,7 @@
 
     - name: Get facts from a file
       copy:
-        dest: "/tmp/facts-{{ inventory_hostname }}.conf"
+        src: "/tmp/facts-{{ inventory_hostname }}.conf"
         content: "{{ _facts }}"
       delegate_to: controller
       become: yes

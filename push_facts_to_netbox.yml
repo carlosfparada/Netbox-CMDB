@@ -8,7 +8,8 @@
     - include_vars: main.yml
 
     - debug:
-        var: hosts['controller']
+        var: hostvars['controller']
+
 
     - name: Get facts from a file
       copy:
@@ -18,7 +19,7 @@
       become: yes
 
     - debug:
-        var: hosts['controller']
+        var: hostvars['controller']
 
 
     - name: Push data to Netbox

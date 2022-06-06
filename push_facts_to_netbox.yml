@@ -9,7 +9,7 @@
 
 
     - debug:
-        var: hostvar.controller
+        var: hostvars.controller
 
     - name: Get facts from a file
       copy:

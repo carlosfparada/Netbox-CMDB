@@ -7,18 +7,19 @@
   tasks:
     - include_vars: main.yml
 
-    - debug:
-        var: hostvars['controller']
-
-
     - name: Get facts from a file
       slurp:
         src: "/tmp/facts-{{ inventory_hostname }}.conf"
       register: _facts
       delegate_to: controller
 
+    - name: Get facts from a file
+      set_facts:
+        facts: _facts
+      delegate_to: controller
+
     - debug:
-        var: hostvars['controller']
+        var: hostvars['controller'].facts
 
 
     - name: Push data to Netbox

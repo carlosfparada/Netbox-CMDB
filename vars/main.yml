@@ -2,3 +2,4 @@
 net_netbox_url: https://172.16.1.60
 net_netbox_token: "db59d5f08ff66721c64bd181e2b23da2e48d2d87"
 site: hetzner
+net_device_role: router

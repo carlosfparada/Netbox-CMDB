@@ -139,8 +139,7 @@
             site: "{{ site }}"
             name: "{{ item.name }}"
             vid: "{{ item.vlan_id }}"
-            status: "{% if item.state == 'suspend' %}suspended{% else %}item.state
-            {% endif %}"
+            status: "{% if item.state == 'suspend' %}suspended{% else %}item.state{% endif %}"
           state: present
         loop: "{{ _facts.ansible_facts.ansible_network_resources.vlans }}"
         when: item is defined

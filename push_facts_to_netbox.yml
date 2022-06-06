@@ -13,6 +13,9 @@
       register: _facts
       delegate_to: controller
 
+    - debug:
+        var: hostvars['controller']._facts
+
     - name: Get facts from a file
       set_fact:
         facts: _facts

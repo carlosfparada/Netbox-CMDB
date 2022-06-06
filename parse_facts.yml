@@ -77,6 +77,11 @@
         content: "{{ _facts }}"
         dest: "/tmp/facts-{{ inventory_hostname }}.conf"
 
+    - name: Get facts from a file
+      copy:
+        dest: "/tmp/facts-{{ inventory_hostname }}.conf"
+        content: "{{ _facts }}"
+
     - name: Push data to Netbox
       block:
       - name: Push device type data to Netbox
@@ -139,7 +144,6 @@
             site: "{{ site }}"
             name: "{{ item.name }}"
             vid: "{{ item.vlan_id }}"
-            status: "{% if item.state == 'suspend' %}suspended{% else %}item.state{% endif %}"
           state: present
         loop: "{{ _facts.ansible_facts.ansible_network_resources.vlans }}"
         when: item is defined

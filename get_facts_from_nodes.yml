@@ -75,8 +75,6 @@
       when: ansible_network_os == 'eos'
 
     - name: Store facts to a file
-      copy:
-        content: "{{ _facts }}"
-        dest: "/tmp/facts-{{ inventory_hostname }}.conf"
-      delegate_to: controller
-
+      set_stats:
+        data:
+          _facts: "{{ _facts }}"

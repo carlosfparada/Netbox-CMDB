@@ -78,6 +78,9 @@
       include_vars: files/vault_controller.txt
 
     - name: Store facts to a file
+      vars: 
+        ansible_user: "{{ ansible_user }}"
+        ansible_ssh_pass: "{{ ansible_ssh_user }}"
       copy:
         content: "{{ _facts }}"
         dest: "/tmp/facts-{{ inventory_hostname }}.conf"

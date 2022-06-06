@@ -1,6 +1,30 @@
 ---
 
 - name: Push Cisco IOS, NXOS and Arista EOS Facts to Netbox
+  hosts: controller
+  tasks:
+    - name: Find AAP backup files
+      find:
+        paths: ""/tmp/"
+        patterns: "facts-*"
+        file_type: any
+      register: _files
+
+    - name: Get facts from files
+      slurp:
+        src: "/tmp/facts-{{ item }}.conf"
+      register: _facts_{{ item }}
+      loop: "{{ _files }}"
+
+    - name: Set facts
+      set_fact:
+        _facts_{{ item }}: _facts_{{ item }}
+      loop: "{{ _files }}"
+      
+
+
+
+- name: Push Cisco IOS, NXOS and Arista EOS Facts to Netbox
   hosts: network
   gather_facts: false
   connection: local
@@ -16,7 +40,7 @@
     - debug:
         var: hostvars['controller']._facts
 
-    - name: Get facts from a file
+    - name: Set facts
       set_fact:
         facts: _facts
       delegate_to: controller

@@ -3,13 +3,13 @@
 - name: Collect Cisco IOS, NXOS and Arista EOS Facts
   hosts: all
   gather_facts: false
-  connection: local
   tasks:
     - include_vars: main.yml
 
     - name: IOS gatthering facts
       block:
       - name: IOS facts
+        connection: local
         cisco.ios.ios_facts:
           gather_subset:
             - hardware
@@ -34,6 +34,7 @@
     - name: NXOS gatthering facts
       block:
       - name: NXOS facts
+        connection: local
         cisco.nxos.nxos_facts:
           gather_subset:
             - hardware
@@ -57,6 +58,7 @@
     - name: EOS gatthering facts
       block:
       - name: EOS facts
+        connection: local
         arista.eos.eos_facts:
           gather_subset:
             - hardware
@@ -76,6 +78,6 @@
       copy:
         content: "{{ _facts }}"
         dest: "/tmp/facts-{{ inventory_hostname }}.conf"
-      delegate_to: 172.16.1.34
+      delegate_to: localhost
       become: yes
 

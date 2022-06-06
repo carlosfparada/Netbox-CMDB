@@ -1,6 +1,6 @@
 ---
 
-- name: Collect Cisco IOS, NXOS and Arista EOS Facts
+- name: Push Cisco IOS, NXOS and Arista EOS Facts to Netbox
   hosts: all
   gather_facts: false
   connection: local
@@ -11,6 +11,7 @@
       copy:
         dest: "/tmp/facts-{{ inventory_hostname }}.conf"
         content: "{{ _facts }}"
+      delegate_to: localhost
       
     - name: Push data to Netbox
       block:

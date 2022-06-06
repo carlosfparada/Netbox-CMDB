@@ -1,6 +1,6 @@
 ---
 
-- name: Parse Cisco IOS, NXOS and Arista EOS Facts
+- name: Collect Cisco IOS, NXOS and Arista EOS Facts
   hosts: all
   gather_facts: false
   connection: local
@@ -76,75 +76,4 @@
       copy:
         content: "{{ _facts }}"
         dest: "/tmp/facts-{{ inventory_hostname }}.conf"
-
-    - name: Get facts from a file
-      copy:
-        dest: "/tmp/facts-{{ inventory_hostname }}.conf"
-        content: "{{ _facts }}"
-
-    - name: Push data to Netbox
-      block:
-      - name: Push device type data to Netbox
-        netbox.netbox.netbox_device_type:
-          netbox_url: "{{ net_netbox_url }}"
-          netbox_token: "{{ net_netbox_token }}"
-          validate_certs: no
-          data: 
-            model: "{{ _facts.ansible_facts.ansible_net_system | default('unknown') }}"
-            manufacturer: "{% if ansible_network_os == 'eos' %}arista{% else %}cisco{% endif %}"
-            slug: "{{ _facts.ansible_facts.ansible_net_system | default('unknown') }}"
-        throttle: 1
-      - name: Push devices data to Netbox
-        netbox.netbox.netbox_device:
-          netbox_url: "{{ net_netbox_url }}"
-          netbox_token: "{{ net_netbox_token }}"
-          validate_certs: no
-          data: 
-            name: "{{ inventory_hostname }}"
-            site: "{{ site }}"
-            serial: "{{ _facts.ansible_facts.ansible_net_serialnum | default(omit) }}"
-            device_type: "{{ _facts.ansible_facts.ansible_net_system | default('unknown') }}"
-            device_role: "{{ net_device_role }}"
-            local_context_data: "{{ _facts.ansible_facts.ansible_network_resources }}"
-            comments: "Added by AAP"
-      - name: Push interfaces data to Netbox
-        netbox.netbox.netbox_device_interface:
-          netbox_url: "{{ net_netbox_url }}"
-          netbox_token: "{{ net_netbox_token }}"
-          validate_certs: no
-          data: 
-            device: "{{ inventory_hostname }}"
-            name: "{{ item.name }}"
-            type: "Virtual"
-            description: "{{ item.name }} description"
-          state: present
-        loop: "{{ _facts.ansible_facts.ansible_network_resources.interfaces }}"
-      - name: Push IPv4 addresses data to Netbox
-        netbox.netbox.netbox_ip_address:
-          netbox_url: "{{ net_netbox_url }}"
-          netbox_token: "{{ net_netbox_token }}"
-          validate_certs: no
-          data: 
-            assigned_object:
-              device: "{{ inventory_hostname }}"
-              name: "{{ item.name }}"
-            family: 4
-            address: "{{ item.ipv4[0].address }}"
-            description: "{{ item.ipv4[0].address }} description"
-          state: present
-        loop: "{{ _facts.ansible_facts.ansible_network_resources.l3_interfaces }}"
-        when: item.ipv4 is defined and item.ipv4[0].address != ""
-
-      - name: Push VLAN data to Netbox
-        netbox.netbox.netbox_vlan:
-          netbox_url: "{{ net_netbox_url }}"
-          netbox_token: "{{ net_netbox_token }}"
-          validate_certs: no
-          data: 
-            site: "{{ site }}"
-            name: "{{ item.name }}"
-            vid: "{{ item.vlan_id }}"
-          state: present
-        loop: "{{ _facts.ansible_facts.ansible_network_resources.vlans }}"
-        when: item is defined
-
+      delegate_to: localhost

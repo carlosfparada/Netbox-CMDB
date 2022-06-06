@@ -12,11 +12,10 @@
 
 
     - name: Get facts from a file
-      copy:
+      slurp:
         src: "/tmp/facts-{{ inventory_hostname }}.conf"
-        content: "{{ _facts }}"
+      register: _facts
       delegate_to: controller
-      become: yes
 
     - debug:
         var: hostvars['controller']

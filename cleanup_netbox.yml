@@ -9,22 +9,28 @@
 
     - name: Debug
       debug:
-        msg: "{{ item }}"
-      loop: "{{ query('netbox.netbox.nb_lookup', 'vlans',
+        var: item
+      loop: query('netbox.netbox.nb_lookup', 'vlans',
                     api_endpoint=net_netbox_url,
                     token=net_netbox_token,
-                    validate_certs=False) }}"
+                    validate_certs=False)
+      when: inventory_hostname == switch_vlans
 
     - name: Cleanup VLAN data on Netbox
       netbox.netbox.netbox_vlan:
         netbox_url: "{{ net_netbox_url }}"
         netbox_token: "{{ net_netbox_token }}"
         validate_certs: no
+        data:
+          site: "{{ item.value.site.name }}"
+          name: "{{ item.value.name }}"
+          vid: "{{ item.value.vid }}"          
         state: absent
       loop: "{{ query('netbox.netbox.nb_lookup', 'vlans',
                     api_endpoint=net_netbox_url,
                     token=net_netbox_token,
                     validate_certs=False) }}"
+      when: inventory_hostname == switch_vlans
 
     - name: Cleanup data on Netbox
       block:

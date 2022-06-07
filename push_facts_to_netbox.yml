@@ -19,6 +19,11 @@
       debug:
         var: _facts
 
+
+    - name: Debug 3
+      debug:
+        var: _facts.ansible_facts
+
     - name: Push site data to Netbox
       netbox.netbox.netbox_site:
         netbox_url: "{{ net_netbox_url }}"

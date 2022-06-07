@@ -7,9 +7,17 @@
   tasks:
     - include_vars: main.yml
 
-    - name: Debug facts to push to Netbox
+    - name: Debug eos facts to push to Netbox
       debug:
-        var: _facts
+        var: _eos_facts
+
+    - name: Debug ios facts to push to Netbox
+      debug:
+        var: _ios_facts
+
+    - name: Debug nxos facts to push to Netbox
+      debug:
+        var: _nxos_facts
 
     - name: Push site data to Netbox
       netbox.netbox.netbox_site:

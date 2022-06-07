@@ -7,7 +7,7 @@
   tasks:
     - include_vars: main.yml
 
-    - name: Debug facts to push to Netbox
+    - name: Debug facts to push to Netbox and copy _facts variables
       debug:
         var: _facts_{{ inventory_hostname | regex_replace('-') }}
       register: _facts

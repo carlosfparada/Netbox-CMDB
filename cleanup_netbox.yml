@@ -39,21 +39,21 @@
                     token=net_netbox_token,
                     validate_certs=False) }}"
 
-    - name: Cleanup interfaces data on Netbox
-      netbox.netbox.netbox_device_interface:
-        netbox_url: "{{ net_netbox_url }}"
-        netbox_token: "{{ net_netbox_token }}"
-        validate_certs: no
-        data: 
-          device: "{{ item.value.device.name }}"
-          name: "{{ item.value.name }}"
-          type: "{{ item.value.type.label }}"
-          description: "{{ item.value.name }}"
-        state: absent
-      loop: "{{ query('netbox.netbox.nb_lookup', 'interfaces',
-                    api_endpoint=net_netbox_url,
-                    token=net_netbox_token,
-                    validate_certs=False) }}"
+    # - name: Cleanup interfaces data on Netbox
+    #   netbox.netbox.netbox_device_interface:
+    #     netbox_url: "{{ net_netbox_url }}"
+    #     netbox_token: "{{ net_netbox_token }}"
+    #     validate_certs: no
+    #     data: 
+    #       device: "{{ item.value.device.name }}"
+    #       name: "{{ item.value.name }}"
+    #       type: "{{ item.value.type.label }}"
+    #       description: "{{ item.value.name }}"
+    #     state: absent
+    #   loop: "{{ query('netbox.netbox.nb_lookup', 'interfaces',
+    #                 api_endpoint=net_netbox_url,
+    #                 token=net_netbox_token,
+    #                 validate_certs=False) }}"
 
     - name: Cleanup devices data on Netbox
       netbox.netbox.netbox_device:

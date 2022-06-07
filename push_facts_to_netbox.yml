@@ -13,7 +13,7 @@
       
     - name: Set facts
       set_fact:
-        ansible_fact: _facts_{{ inventory_hostname | regex_replace('-') }}
+        ansible_fact: "_facts_{{ inventory_hostname | regex_replace('-') }}"
   
     - name: Debug ansible_facts to push to Netbox
       debug:

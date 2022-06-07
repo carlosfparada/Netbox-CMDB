@@ -5,7 +5,7 @@
   gather_facts: false
   connection: local
   vars:
-    facts: _facts_{{ inventory_hostname | regex_replace('-') }}
+    facts: "_facts_{{ inventory_hostname | regex_replace('-') }}"
   tasks:
     - include_vars: main.yml
 

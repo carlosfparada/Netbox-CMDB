@@ -71,9 +71,12 @@
         netbox_token: "{{ net_netbox_token }}"
         validate_certs: no
         data: 
-          device: "{{ item.value.assigned_object.device.name }}"
+          device: "{{ item.value.device.name }}"
           name: "{{ item.value.name }}"
-          type: "Virtual"
+          type: "{{ item.value.type.label }}"
           description: "{{ item.value.name }}"
         state: absent
-      loop: "{{ _facts.ansible_facts.ansible_network_resources.interfaces }}"
+      loop: "{{ query('netbox.netbox.nb_lookup', 'interfaces',
+                    api_endpoint=net_netbox_url,
+                    token=net_netbox_token,
+                    validate_certs=False) }}"

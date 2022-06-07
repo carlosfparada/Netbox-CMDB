@@ -11,6 +11,19 @@
       debug:
         var: _facts
 
+    - name: Push site data to Netbox
+      netbox.netbox.netbox_site:
+        netbox_url: "{{ net_netbox_url }}"
+        netbox_token: "{{ net_netbox_token }}"
+        validate_certs: no
+        data: 
+          name: "{{ site }}"
+          slug: "{{ site }}"
+          description: "Site located in {{ site }}"
+          status: Active
+        state: present
+      throttle: 1
+
     - name: Push device type data to Netbox
       netbox.netbox.netbox_device_type:
         netbox_url: "{{ net_netbox_url }}"

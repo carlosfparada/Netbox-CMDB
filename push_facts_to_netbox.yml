@@ -17,7 +17,7 @@
   
     - name: Debug ansible_facts to push to Netbox
       debug:
-        var: _ansible_facts
+        var: ansible_fact
 
     - name: Push site data to Netbox
       netbox.netbox.netbox_site:

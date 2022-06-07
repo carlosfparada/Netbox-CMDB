@@ -94,10 +94,10 @@
         netbox_token: "{{ net_netbox_token }}"
         validate_certs: no
         data: 
-          name: "{{ item.value.model }}"
+          name: "{{ item.value.name }}"
           slug: "{{ item.value.slug }}"
           description: "Site located in {{ item.value.slug }}"
-          status: Active
+          status: "{{ item.value.status.label }}"
         state: absent
       throttle: 1
       loop: "{{ query('netbox.netbox.nb_lookup', 'sites',

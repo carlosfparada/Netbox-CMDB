@@ -7,6 +7,14 @@
   tasks:
     - include_vars: main.yml
 
+    - name: Debug
+      debug:
+        msg: "{{ item }}"
+      loop: "{{ query('netbox.netbox.nb_lookup', 'vlans',
+                    api_endpoint=net_netbox_url,
+                    token=net_netbox_token,
+                    validate_certs=False) }}"
+
     - name: Cleanup VLAN data on Netbox
       netbox.netbox.netbox_vlan:
         netbox_url: "{{ net_netbox_url }}"

@@ -1,13 +1,13 @@
 ---
 
-- name: Cleanup data on Netbox
+- name: Query data on Netbox
   hosts: localhost
   gather_facts: false
   connection: local
   tasks:
     - include_vars: main.yml
 
-    - name: Debug VLANs on Netbox
+    - name: Query VLANs on Netbox
       debug:
         var: item
       loop: "{{ query('netbox.netbox.nb_lookup', 'vlans',
@@ -16,7 +16,7 @@
                     validate_certs=False) }}"
       when: inventory_hostname == switch_vlans
 
-    - name: Debug IPv4 addresses data on Netbox
+    - name: Query IPv4 addresses data on Netbox
       debug:
         var: item
       loop: "{{ query('netbox.netbox.nb_lookup', 'ip-addresses',
@@ -24,7 +24,7 @@
                     token=net_netbox_token,
                     validate_certs=False) }}"
 
-    - name: Debug interfaces data on Netbox
+    - name: Query interfaces data on Netbox
       debug:
         var: item
       loop: "{{ query('netbox.netbox.nb_lookup', 'interfaces',
@@ -32,7 +32,7 @@
                     token=net_netbox_token,
                     validate_certs=False) }}"
 
-    - name: Debug devices data on Netbox
+    - name: Query devices data on Netbox
       debug:
         var: item
       loop: "{{ query('netbox.netbox.nb_lookup', 'devices',
@@ -40,7 +40,7 @@
                     token=net_netbox_token,
                     validate_certs=False) }}"
 
-    - name: Debug device types data on Netbox
+    - name: Query device types data on Netbox
       debug:
         var: item
       loop: "{{ query('netbox.netbox.nb_lookup', 'device-types',
@@ -48,7 +48,7 @@
                     token=net_netbox_token,
                     validate_certs=False) }}"
 
-    - name: Debug sites data on Netbox
+    - name: Query sites data on Netbox
       debug:
         var: item
       loop: "{{ query('netbox.netbox.nb_lookup', 'sites',

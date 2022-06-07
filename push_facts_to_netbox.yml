@@ -28,7 +28,7 @@
 
     - name: Debug 2
       debug:
-        var: _ansible_facts
+        var: _ansible_facts.ansible_net_api
 
     - name: Push device type data to Netbox
       netbox.netbox.netbox_device_type:
@@ -39,6 +39,10 @@
           model: "{{ _facts.ansible_facts.ansible_net_system | default('unknown') }}"
           manufacturer: "{% if ansible_network_os == 'eos' %}arista{% else %}cisco{% endif %}"
           slug: "{{ _facts.ansible_facts.ansible_net_system | default('unknown') }}"
+
+          # model: "{{ _facts.ansible_facts.ansible_net_system | default('unknown') }}"
+          # manufacturer: "{% if ansible_network_os == 'eos' %}arista{% else %}cisco{% endif %}"
+          # slug: "{{ _facts.ansible_facts.ansible_net_system | default('unknown') }}"
         state: present
       throttle: 1
 

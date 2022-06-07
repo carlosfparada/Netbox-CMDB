@@ -27,7 +27,7 @@
     
     - name: Debug 4
       debug:
-        var: _facts._name
+        var: _facts.[_name]
 
     - name: Push site data to Netbox
       netbox.netbox.netbox_site:

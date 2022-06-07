@@ -7,6 +7,16 @@
   tasks:
     - include_vars: main.yml
 
+    - name: Cleanup VLAN data on Netbox
+      netbox.netbox.netbox_vlan:
+        netbox_url: "{{ net_netbox_url }}"
+        netbox_token: "{{ net_netbox_token }}"
+        validate_certs: no
+        state: absent
+      loop: "{{ query('netbox.netbox.nb_lookup', 'vlan',
+                    api_endpoint='{{ net_netbox_url }}',
+                    token='{{ net_netbox_token }}') }}"
+
     - name: Cleanup data on Netbox
       block:
       - name: Cleanup device type data on Netbox

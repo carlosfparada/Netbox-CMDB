@@ -80,4 +80,4 @@
             vid: "{{ item.vlan_id }}"
           state: present
         loop: "{{ _facts.ansible_facts.ansible_network_resources.vlans }}"
-        when: inventory_hostname == switch and item is defined
+        when: inventory_hostname == switch_vlans and item is defined

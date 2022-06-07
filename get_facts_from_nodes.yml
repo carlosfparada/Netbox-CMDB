@@ -78,4 +78,5 @@
       set_stats:
         data:
           _facts_{{ inventory_hostname | regex_replace('-') }}: "{{ _facts }}"
+          per_host: yes
 

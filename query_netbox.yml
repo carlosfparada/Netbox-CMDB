@@ -14,7 +14,6 @@
                     api_endpoint=net_netbox_url,
                     token=net_netbox_token,
                     validate_certs=False) }}"
-      when: inventory_hostname == switch_vlans
 
     - name: Query IPv4 addresses data on Netbox
       debug:

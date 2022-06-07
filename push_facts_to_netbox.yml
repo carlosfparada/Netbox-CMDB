@@ -71,7 +71,7 @@
           validate_certs: no
           data:
             name: "{{ inventory_hostname }}"
-            scope: "switch"
+            scope: "{{ inventory_hostname }}"
             scope_type: "dcim.site"
             site: "{{ site }}"
           state: present

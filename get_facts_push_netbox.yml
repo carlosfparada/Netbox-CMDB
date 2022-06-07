@@ -123,6 +123,7 @@
           local_context_data: "{{ _facts.ansible_facts.ansible_network_resources }}"
           comments: "Added by AAP"
         state: present
+      throttle: 1
 
     - name: Push interfaces data to Netbox
       netbox.netbox.netbox_device_interface:
@@ -136,6 +137,7 @@
           description: "{{ item.name }} description"
         state: present
       loop: "{{ _facts.ansible_facts.ansible_network_resources.interfaces }}"
+      throttle: 1
 
     - name: Push IPv4 addresses data to Netbox
       netbox.netbox.netbox_ip_address:
@@ -152,6 +154,7 @@
         state: present
       loop: "{{ _facts.ansible_facts.ansible_network_resources.l3_interfaces }}"
       when: item.ipv4 is defined and item.ipv4[0].address != ""
+      throttle: 1
 
     - name: Push VLANs data to Netbox
       netbox.netbox.netbox_vlan:
@@ -165,3 +168,4 @@
         state: present
       loop: "{{ _facts.ansible_facts.ansible_network_resources.vlans }}"
       when: item is defined
+      throttle: 1

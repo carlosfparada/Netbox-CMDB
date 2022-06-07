@@ -44,7 +44,7 @@
         data: 
           model: "{{'_facts_' + inventory_hostname | regex_replace('-') + '.ansible_facts.ansible_net_system' }}"
           manufacturer: "{% if ansible_network_os == 'eos' %}arista{% else %}cisco{% endif %}"
-          slug: _facts_{{ inventory_hostname | regex_replace('-') }}.ansible_facts.ansible_net_system
+          slug: "{{'_facts_' + inventory_hostname | regex_replace('-') + '.ansible_facts.ansible_net_system' }}"
 
           # model: "{{ _facts.ansible_facts.ansible_net_system | default('unknown') }}"
           # manufacturer: "{% if ansible_network_os == 'eos' %}arista{% else %}cisco{% endif %}"

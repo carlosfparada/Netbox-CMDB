@@ -16,7 +16,7 @@
       loop: "{{ query('netbox.netbox.nb_lookup', 'vlans',
                     api_endpoint=net_netbox_url,
                     token=net_netbox_token,
-                    validate_certs='no') }}"
+                    validate_certs=no) }}"
 
     - name: Cleanup data on Netbox
       block:

@@ -15,9 +15,9 @@
         _facts: _facts_{{ inventory_hostname | regex_replace('-') }}
 
 
-    - name: Debug 2
-      debug:
-        var: _facts
+    # - name: Debug 2
+    #   debug:
+    #     var: _facts
 
 
     - name: Debug 3

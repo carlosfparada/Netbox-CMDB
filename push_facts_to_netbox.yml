@@ -64,7 +64,7 @@
         loop: "{{ _facts.ansible_facts.ansible_network_resources.l3_interfaces }}"
         when: item.ipv4 is defined and item.ipv4[0].address != ""
 
-      - name: Create VLA\N Group to Netbox
+      - name: Create VLAN Group to Netbox
         netbox.netbox.netbox_vlan_group:
           netbox_url: "{{ net_netbox_url }}"
           netbox_token: "{{ net_netbox_token }}"

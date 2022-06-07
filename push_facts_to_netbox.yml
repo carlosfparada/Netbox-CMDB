@@ -9,8 +9,15 @@
 
     - name: Debug facts to push to Netbox and copy _facts variables
       debug:
-        var: _facts_{{ inventory_hostname | regex_replace('-') }}.ansible_facts
-      register: _ansible_facts
+        var: _facts_{{ inventory_hostname | regex_replace('-') }}
+
+    - set_fact:
+        _facts: "_facts_{{ inventory_hostname | regex_replace('-') }}"
+
+
+    - name: Debug 2
+      debug:
+        var: _facts
 
     - name: Push site data to Netbox
       netbox.netbox.netbox_site:
@@ -26,9 +33,6 @@
       delegate_to: localhost
       throttle: 1
 
-    - name: Debug 2
-      debug:
-        var: _ansible_facts.ansible_net_api
 
     - name: Push device type data to Netbox
       netbox.netbox.netbox_device_type:

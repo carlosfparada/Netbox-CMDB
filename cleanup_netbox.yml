@@ -81,28 +81,51 @@
     #                 token=net_netbox_token,
     #                 validate_certs=False) }}"
 
-    - name: Debug devices data on Netbox
+    # - name: Debug devices data on Netbox
+    #   debug:
+    #     var: item
+    #   loop: "{{ query('netbox.netbox.nb_lookup', 'devices',
+    #                 api_endpoint=net_netbox_url,
+    #                 token=net_netbox_token,
+    #                 validate_certs=False) }}"
+
+    # - name: Cleanup devices data to Netbox
+    #   netbox.netbox.netbox_device:
+    #     netbox_url: "{{ net_netbox_url }}"
+    #     netbox_token: "{{ net_netbox_token }}"
+    #     validate_certs: no
+    #     data: 
+    #       name: "{{ item.value.name }}"
+    #       site: "{{ site }}"
+    #       serial: "{{ item.value.serial }}"
+    #       device_type: "{{ item.value.device_type }}"
+    #       device_role: "{{ item.value.device_role }}"
+    #       comments: "Added by AAP"
+    #     state: absent
+    #   loop: "{{ query('netbox.netbox.nb_lookup', 'devices',
+    #           api_endpoint=net_netbox_url,
+    #           token=net_netbox_token,
+    #           validate_certs=False) }}"
+
+    - name: Debug device types data on Netbox
       debug:
         var: item
-      loop: "{{ query('netbox.netbox.nb_lookup', 'devices',
+      loop: "{{ query('netbox.netbox.nb_lookup', 'devices-types',
                     api_endpoint=net_netbox_url,
                     token=net_netbox_token,
                     validate_certs=False) }}"
 
-    - name: Cleanup devices data to Netbox
-      netbox.netbox.netbox_device:
+    - name: Push device type data to Netbox
+      netbox.netbox.netbox_device_type:
         netbox_url: "{{ net_netbox_url }}"
         netbox_token: "{{ net_netbox_token }}"
         validate_certs: no
         data: 
-          name: "{{ item.value.name }}"
-          site: "{{ site }}"
-          serial: "{{ item.value.serial }}"
-          device_type: "{{ item.value.device_type }}"
-          device_role: "{{ item.value.device_role }}"
-          comments: "Added by AAP"
+          model: "{{ item.value.model }}"
+          manufacturer: "{{ item.value.manufacturer }}"
+          slug: "{{ item.value.slug }}"
         state: absent
-      loop: "{{ query('netbox.netbox.nb_lookup', 'devices',
-              api_endpoint=net_netbox_url,
-              token=net_netbox_token,
-              validate_certs=False) }}"
+      loop: "{{ query('netbox.netbox.nb_lookup', 'devices-types',
+                    api_endpoint=net_netbox_url,
+                    token=net_netbox_token,
+                    validate_certs=False) }}"

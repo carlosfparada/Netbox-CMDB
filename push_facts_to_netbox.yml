@@ -22,7 +22,7 @@
 
     - name: Debug 3
       debug:
-        var: "{{ facts_{{ inventory_hostname | regex_replace('-') }}.ansible_facts.ansible_net_system | default('unknown') }}"
+        var: "{{ 'facts_' + inventory_hostname | regex_replace('-') + '.ansible_facts.ansible_net_system' | default('unknown') }}"
 
     - name: Push site data to Netbox
       netbox.netbox.netbox_site:

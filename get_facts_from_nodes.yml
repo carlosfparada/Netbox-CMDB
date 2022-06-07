@@ -77,6 +77,7 @@
     - name: Store facts to a variable
       set_stats:
         data:
-          _facts_{{ inventory_hostname | regex_replace('-') }}: "{{ _facts }}"
+          #_facts_{{ inventory_hostname | regex_replace('-') }}: "{{ _facts }}"
+          _facts: "{{ _facts }}"
         per_host: yes
 

@@ -7,9 +7,9 @@
   tasks:
     - include_vars: main.yml
 
-    # - name: Debug facts to push to Netbox
-    #   debug:
-    #     var: _facts_{{ inventory_hostname | regex_replace('-') }}
+    - name: Debug facts to push to Netbox
+      debug:
+        var: _facts_{{ inventory_hostname | regex_replace('-') }}
 
     - name: Set facts to _facts
       set_fact:
@@ -40,9 +40,9 @@
         netbox_token: "{{ net_netbox_token }}"
         validate_certs: no
         data: 
-          model: "{{ _facts.ansible_facts.ansible_net_system | default('unknown') }}"
+          model: "{{ _facts_{{ inventory_hostname | regex_replace('-') }}.ansible_facts.ansible_net_system | default('unknown') }}"
           manufacturer: "{% if ansible_network_os == 'eos' %}arista{% else %}cisco{% endif %}"
-          slug: "{{ _facts.ansible_facts.ansible_net_system | default('unknown') }}"
+          slug: "{{ _facts_{{ inventory_hostname | regex_replace('-') }}.ansible_facts.ansible_net_system | default('unknown') }}"
         state: present
       throttle: 1
 

@@ -23,6 +23,7 @@
           status: Active
         state: present
       delegate_to: localhost
+      throttle: 1
 
     - name: Push device type data to Netbox
       netbox.netbox.netbox_device_type:

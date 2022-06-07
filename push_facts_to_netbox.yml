@@ -73,6 +73,7 @@
             name: "{{ inventory_hostname }}"
             scope: "switch"
             scope_type: "dcim.rack"
+
           state: present
 
       - name: Push VLAN data to Netbox
@@ -85,6 +86,7 @@
             name: "{{ item.name }}"
             vid: "{{ item.vlan_id }}"
             vlan_group: "{{ inventory_hostname }}"
+            site: "{{ site }}"
           state: present
         loop: "{{ _facts.ansible_facts.ansible_network_resources.vlans }}"
         when: item is defined

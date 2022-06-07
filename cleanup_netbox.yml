@@ -7,7 +7,7 @@
   tasks:
     - include_vars: main.yml
 
-    - name: Debug
+    - name: Debug VLANs on Netbox
       debug:
         var: item
       loop: "{{ query('netbox.netbox.nb_lookup', 'vlans',
@@ -32,22 +32,31 @@
                     validate_certs=False) }}"
       when: inventory_hostname == switch_vlans
 
+    - name: Debug IPv4 addresses data on Netbox
+      debug:
+        var: item
+      loop: "{{ query('netbox.netbox.nb_lookup', 'ip-addresses',
+                    api_endpoint=net_netbox_url,
+                    token=net_netbox_token,
+                    validate_certs=False) }}"
 
-    # - name: Cleanup IPv4 addresses data on Netbox
-    #   netbox.netbox.netbox_ip_address:
-    #     netbox_url: "{{ net_netbox_url }}"
-    #     netbox_token: "{{ net_netbox_token }}"
-    #     validate_certs: no
-    #     data: 
-    #       assigned_object:
-    #         device: "{{ inventory_hostname }}"
-    #         name: "{{ item.name }}"
-    #       family: 4
-    #       address: "{{ item.ipv4[0].address }}"
-    #       description: "{{ item.ipv4[0].address }} description"
-    #     state: present
-    #   loop: "{{ _facts.ansible_facts.ansible_network_resources.l3_interfaces }}"
-
+    - name: Cleanup IPv4 addresses data on Netbox
+      netbox.netbox.netbox_ip_address:
+        netbox_url: "{{ net_netbox_url }}"
+        netbox_token: "{{ net_netbox_token }}"
+        validate_certs: no
+        data: 
+          assigned_object:
+            device: "{{ inventory_hostname }}"
+            name: "{{ item.name }}"
+          family: 4
+          address: "{{ item.ipv4[0].address }}"
+          description: "{{ item.ipv4[0].address }} description"
+        state: present
+      loop: "{{ query('netbox.netbox.nb_lookup', 'ip-addresses',
+                    api_endpoint=net_netbox_url,
+                    token=net_netbox_token,
+                    validate_certs=False) }}"
 
 
 

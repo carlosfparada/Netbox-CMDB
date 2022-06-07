@@ -4,6 +4,8 @@
   hosts: all
   gather_facts: false
   connection: local
+  vars:
+    _facts: _facts_{{ inventory_hostname | regex_replace('-') }}
   tasks:
     - include_vars: main.yml
 
@@ -15,19 +17,9 @@
     - set_fact:
         _name: _facts_{{ inventory_hostname | regex_replace('-') }}
 
-
     - name: Debug 2
       debug:
         var: _facts
-
-
-    - name: Debug 3
-      debug:
-        var: _name
-    
-    - name: Debug 4
-      debug:
-        var: _facts.[_name]
 
     - name: Push site data to Netbox
       netbox.netbox.netbox_site:

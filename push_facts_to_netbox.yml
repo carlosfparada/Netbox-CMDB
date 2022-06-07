@@ -28,7 +28,7 @@
 
     - name: Debug 2
       debug:
-        var: _fact
+        var: _facts
 
     - name: Push device type data to Netbox
       netbox.netbox.netbox_device_type:

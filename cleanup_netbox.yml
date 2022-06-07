@@ -110,7 +110,7 @@
     - name: Debug device types data on Netbox
       debug:
         var: item
-      loop: "{{ query('netbox.netbox.nb_lookup', 'devices-types',
+      loop: "{{ query('netbox.netbox.nb_lookup', 'device-types',
                     api_endpoint=net_netbox_url,
                     token=net_netbox_token,
                     validate_certs=False) }}"

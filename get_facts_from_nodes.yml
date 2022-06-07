@@ -27,8 +27,9 @@
         debug:
           var: _ios_facts
       - name: Set IOS facts
-        set_fact:
-          _ios_facts: "{{ _ios_facts }}"
+        set_stat:
+          data:
+            _ios_facts: "{{ _ios_facts }}"
       when: ansible_network_os == 'ios'
 
     - name: NXOS gatthering facts
@@ -51,8 +52,9 @@
         debug:
           var: _nxos_facts
       - name: Set NXOS facts
-        set_fact:
-          _nxos_facts: "{{ _nxos_facts }}"
+        set_stat:
+          data:
+            _nxos_facts: "{{ _nxos_facts }}"
       when: ansible_network_os == 'nxos'
 
     - name: EOS gatthering facts
@@ -70,13 +72,8 @@
         debug:
           var: _eos_facts
       - name: Set EOS facts
-        set_fact:
-          _eos_facts: "{{ _eos_facts }}"
+        set_stat:
+          data:
+            _eos_facts: "{{ _eos_facts }}"
       when: ansible_network_os == 'eos'
 
-    - name: Store facts to a variable
-      set_stats:
-        data:
-          _ios_facts: "{{ _ios_facts }}"
-          _nxos_facts: "{{ _nxos_facts }}"
-          _eos_facts: "{{ _eos_facts }}"

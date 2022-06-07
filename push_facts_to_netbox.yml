@@ -65,7 +65,7 @@
         when: item.ipv4 is defined and item.ipv4[0].address != ""
 
       - name: Create VLAN Group to Netbox
-        netbox_vlan_group:
+        netbox.netbox.netbox_vlan_group:
           netbox_url: "{{ net_netbox_url }}"
           netbox_token: "{{ net_netbox_token }}"
           data:

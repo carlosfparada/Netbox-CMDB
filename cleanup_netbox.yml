@@ -7,14 +7,14 @@
   tasks:
     - include_vars: main.yml
 
-    - name: Debug VLANs on Netbox
-      debug:
-        var: item
-      loop: "{{ query('netbox.netbox.nb_lookup', 'vlans',
-                    api_endpoint=net_netbox_url,
-                    token=net_netbox_token,
-                    validate_certs=False) }}"
-      when: inventory_hostname == switch_vlans
+    # - name: Debug VLANs on Netbox
+    #   debug:
+    #     var: item
+    #   loop: "{{ query('netbox.netbox.nb_lookup', 'vlans',
+    #                 api_endpoint=net_netbox_url,
+    #                 token=net_netbox_token,
+    #                 validate_certs=False) }}"
+    #   when: inventory_hostname == switch_vlans
 
     - name: Cleanup VLAN data on Netbox
       netbox.netbox.netbox_vlan:
@@ -32,13 +32,13 @@
                     validate_certs=False) }}"
       when: inventory_hostname == switch_vlans
 
-    - name: Debug IPv4 addresses data on Netbox
-      debug:
-        var: item
-      loop: "{{ query('netbox.netbox.nb_lookup', 'ip-addresses',
-                    api_endpoint=net_netbox_url,
-                    token=net_netbox_token,
-                    validate_certs=False) }}"
+    # - name: Debug IPv4 addresses data on Netbox
+    #   debug:
+    #     var: item
+    #   loop: "{{ query('netbox.netbox.nb_lookup', 'ip-addresses',
+    #                 api_endpoint=net_netbox_url,
+    #                 token=net_netbox_token,
+    #                 validate_certs=False) }}"
 
     - name: Cleanup IPv4 addresses data on Netbox
       netbox.netbox.netbox_ip_address:
@@ -57,28 +57,23 @@
                     token=net_netbox_token,
                     validate_certs=False) }}"
 
-
-
-
-    - name: Cleanup device type data on Netbox
-      netbox.netbox.netbox_device_type:
-        netbox_url: "{{ net_netbox_url }}"
-        netbox_token: "{{ net_netbox_token }}"
-        validate_certs: no
-        state: absent
-      throttle: 1
-
-    - name: Cleanup devices data on Netbox
-      netbox.netbox.netbox_device:
-        netbox_url: "{{ net_netbox_url }}"
-        netbox_token: "{{ net_netbox_token }}"
-        validate_certs: no
-        state: absent
+    - name: Debug interfaces data on Netbox
+      debug:
+        var: item
+      loop: "{{ query('netbox.netbox.nb_lookup', 'interfaces',
+                    api_endpoint=net_netbox_url,
+                    token=net_netbox_token,
+                    validate_certs=False) }}"
 
     - name: Cleanup interfaces data on Netbox
       netbox.netbox.netbox_device_interface:
         netbox_url: "{{ net_netbox_url }}"
         netbox_token: "{{ net_netbox_token }}"
         validate_certs: no
-
-
+        data: 
+          device: "{{ item.value.assigned_object.device.name }}"
+          name: "{{ item.value.name }}"
+          type: "Virtual"
+          description: "{{ item.value.name }}"
+        state: absent
+      loop: "{{ _facts.ansible_facts.ansible_network_resources.interfaces }}"

@@ -72,7 +72,7 @@
           data:
             name: "{{ inventory_hostname }}"
             scope: "switch"
-            scope_type: "dcim.location"
+            scope_type: "dcim.rack"
           state: present
 
       - name: Push VLAN data to Netbox

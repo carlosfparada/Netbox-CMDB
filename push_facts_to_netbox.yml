@@ -10,14 +10,11 @@
     - name: Debug facts to push to Netbox
       debug:
         var: _facts_{{ inventory_hostname | regex_replace('-') }}.ansible_facts
-      
-    - name: Set facts
-      set_fact:
-        ansible_fact: _facts_{{ inventory_hostname | regex_replace('-') }}
+      register: _fact
   
     - name: Debug ansible_facts to push to Netbox
       debug:
-        var: ansible_fact
+        var: _fact
 
     - name: Push site data to Netbox
       netbox.netbox.netbox_site:

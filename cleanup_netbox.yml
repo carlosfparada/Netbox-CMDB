@@ -13,9 +13,10 @@
         netbox_token: "{{ net_netbox_token }}"
         validate_certs: no
         state: absent
-      loop: "{{ query('netbox.netbox.nb_lookup', 'vlan',
+      loop: "{{ query('netbox.netbox.nb_lookup', 'vlans',
                     api_endpoint='{{ net_netbox_url }}',
-                    token='{{ net_netbox_token }}') }}"
+                    token='{{ net_netbox_token }}',
+                    validate_certs='no') }}"
 
     - name: Cleanup data on Netbox
       block:

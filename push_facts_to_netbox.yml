@@ -13,7 +13,7 @@
 
     - name: Set facts to _facts
       set_fact:
-        _fact: _facts_{{ inventory_hostname | regex_replace('-') }}
+        _facts: _facts_{{ inventory_hostname | regex_replace('-') }}
 
     - name: Push site data to Netbox
       netbox.netbox.netbox_site:

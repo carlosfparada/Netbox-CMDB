@@ -22,7 +22,7 @@
           description: "Site located in {{ site }}"
           status: Active
         state: present
-        throttle: 1
+      throttle: 1
 
     - name: Push device type data to Netbox
       netbox.netbox.netbox_device_type:
@@ -34,7 +34,7 @@
           manufacturer: "{% if ansible_network_os == 'eos' %}arista{% else %}cisco{% endif %}"
           slug: "{{ _facts.ansible_facts.ansible_net_system | default('unknown') }}"
         state: present
-        throttle: 1
+      throttle: 1
 
     - name: Push devices data to Netbox
       netbox.netbox.netbox_device:

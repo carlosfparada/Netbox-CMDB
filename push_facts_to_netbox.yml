@@ -15,11 +15,11 @@
 
     - name: Debug 1
       debug:
-        var: _facts_{{ inventory_hostname | regex_replace('-') }}.ansible_facts.ansible_net_system
+        var: _facts
 
     - name: Debug 2
       debug:
-        var: _facts
+        msg: "AAA {{'_facts_' + inventory_hostname | regex_replace('-') + '.ansible_facts.ansible_net_system' }}"
 
     - name: Push site data to Netbox
       netbox.netbox.netbox_site:
@@ -42,7 +42,7 @@
         netbox_token: "{{ net_netbox_token }}"
         validate_certs: no
         data: 
-          model: _facts_{{ inventory_hostname | regex_replace('-') }}.ansible_facts.ansible_net_system
+          model: "{{'_facts_' + inventory_hostname | regex_replace('-') + '.ansible_facts.ansible_net_system' }}"
           manufacturer: "{% if ansible_network_os == 'eos' %}arista{% else %}cisco{% endif %}"
           slug: _facts_{{ inventory_hostname | regex_replace('-') }}.ansible_facts.ansible_net_system
 

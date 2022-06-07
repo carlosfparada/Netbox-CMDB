@@ -22,7 +22,7 @@
           description: "Site located in {{ site }}"
           status: Active
         state: present
-      throttle: 1
+      delegate_to: localhost
 
     - name: Push device type data to Netbox
       netbox.netbox.netbox_device_type:

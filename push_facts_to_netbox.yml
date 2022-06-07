@@ -68,6 +68,7 @@
         netbox.netbox.netbox_vlan_group:
           netbox_url: "{{ net_netbox_url }}"
           netbox_token: "{{ net_netbox_token }}"
+          validate_certs: no
           data:
             name: "{{ inventory_hostname }}"
             scope: "switch"

@@ -10,10 +10,10 @@
     - name: Debug
       debug:
         var: item
-      loop: query('netbox.netbox.nb_lookup', 'vlans',
+      loop: "{{ query('netbox.netbox.nb_lookup', 'vlans',
                     api_endpoint=net_netbox_url,
                     token=net_netbox_token,
-                    validate_certs=False)
+                    validate_certs=False) }}"
       when: inventory_hostname == switch_vlans
 
     - name: Cleanup VLAN data on Netbox

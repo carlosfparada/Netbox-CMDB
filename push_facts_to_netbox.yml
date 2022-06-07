@@ -70,7 +70,7 @@
           netbox_token: "{{ net_netbox_token }}"
           data:
             name: "{{ inventory_hostname }}"
-            scope: "switch"
+            scope: "\switch"
             scope_type: "dcim.location"
           state: present
 

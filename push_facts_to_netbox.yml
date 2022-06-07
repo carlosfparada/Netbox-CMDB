@@ -5,7 +5,7 @@
   gather_facts: false
   connection: local
   vars:
-    _facts: _facts_{{ inventory_hostname | regex_replace('-') }}
+    facts: _facts_{{ inventory_hostname | regex_replace('-') }}
   tasks:
     - include_vars: main.yml
 
@@ -14,12 +14,13 @@
         var: _facts_{{ inventory_hostname | regex_replace('-') }}
       register: _facts
 
-    - set_fact:
-        _name: _facts_{{ inventory_hostname | regex_replace('-') }}
-
     - name: Debug 2
       debug:
         var: _facts
+
+    - name: Debug 3
+      debug:
+        var: facts
 
     - name: Push site data to Netbox
       netbox.netbox.netbox_site:

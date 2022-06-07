@@ -12,7 +12,7 @@
         var: _facts_{{ inventory_hostname | regex_replace('-') }}
 
     - set_fact:
-        _facts: "_facts_{{ inventory_hostname | regex_replace('-') }}"
+        _facts: _facts_{{ inventory_hostname | regex_replace('-') }}
 
 
     - name: Debug 2

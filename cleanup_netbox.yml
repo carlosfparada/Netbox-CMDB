@@ -99,7 +99,6 @@
           description: "Site located in {{ item.value.slug }}"
           status: "{{ item.value.status.label }}"
         state: absent
-      throttle: 1
       loop: "{{ query('netbox.netbox.nb_lookup', 'sites',
               api_endpoint=net_netbox_url,
               token=net_netbox_token,

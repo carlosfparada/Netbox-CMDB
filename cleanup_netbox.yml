@@ -47,12 +47,11 @@
         validate_certs: no
         data: 
           assigned_object:
-            device: "{{ inventory_hostname }}"
-            name: "{{ item.name }}"
-          family: 4
-          address: "{{ item.ipv4[0].address }}"
-          description: "{{ item.ipv4[0].address }} description"
-        state: present
+            device: "{{ item.value.assigned_object.device.name }}"
+            name: "{{ item.value.assigned_object.name }}"
+          family: "{{ item.value.family.value }}"
+          address: "{{ item.value.address }}"
+        state: absent
       loop: "{{ query('netbox.netbox.nb_lookup', 'ip-addresses',
                     api_endpoint=net_netbox_url,
                     token=net_netbox_token,
@@ -60,27 +59,26 @@
 
 
 
-    - name: Cleanup data on Netbox
-      block:
-      - name: Cleanup device type data on Netbox
-        netbox.netbox.netbox_device_type:
-          netbox_url: "{{ net_netbox_url }}"
-          netbox_token: "{{ net_netbox_token }}"
-          validate_certs: no
-          state: absent
-        throttle: 1
 
-      - name: Cleanup devices data on Netbox
-        netbox.netbox.netbox_device:
-          netbox_url: "{{ net_netbox_url }}"
-          netbox_token: "{{ net_netbox_token }}"
-          validate_certs: no
-          state: absent
+    - name: Cleanup device type data on Netbox
+      netbox.netbox.netbox_device_type:
+        netbox_url: "{{ net_netbox_url }}"
+        netbox_token: "{{ net_netbox_token }}"
+        validate_certs: no
+        state: absent
+      throttle: 1
 
-      - name: Cleanup interfaces data on Netbox
-        netbox.netbox.netbox_device_interface:
-          netbox_url: "{{ net_netbox_url }}"
-          netbox_token: "{{ net_netbox_token }}"
-          validate_certs: no
+    - name: Cleanup devices data on Netbox
+      netbox.netbox.netbox_device:
+        netbox_url: "{{ net_netbox_url }}"
+        netbox_token: "{{ net_netbox_token }}"
+        validate_certs: no
+        state: absent
+
+    - name: Cleanup interfaces data on Netbox
+      netbox.netbox.netbox_device_interface:
+        netbox_url: "{{ net_netbox_url }}"
+        netbox_token: "{{ net_netbox_token }}"
+        validate_certs: no
 
 

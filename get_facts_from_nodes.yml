@@ -27,7 +27,7 @@
         debug:
           var: _ios_facts
       - name: Set IOS facts
-        set_stat:
+        set_stats:
           data:
             _ios_facts: "{{ _ios_facts }}"
       when: ansible_network_os == 'ios'
@@ -52,7 +52,7 @@
         debug:
           var: _nxos_facts
       - name: Set NXOS facts
-        set_stat:
+        set_stats:
           data:
             _nxos_facts: "{{ _nxos_facts }}"
       when: ansible_network_os == 'nxos'
@@ -72,7 +72,7 @@
         debug:
           var: _eos_facts
       - name: Set EOS facts
-        set_stat:
+        set_stats:
           data:
             _eos_facts: "{{ _eos_facts }}"
       when: ansible_network_os == 'eos'

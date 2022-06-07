@@ -164,4 +164,5 @@
           vid: "{{ item.vlan_id }}"
         state: present
       loop: "{{ _facts.ansible_facts.ansible_network_resources.vlans }}"
-      when: inventory_hostname == switch_vlans and item is defined
+      when: item is defined #and inventory_hostname == switch_vlans
+      throttle: 1

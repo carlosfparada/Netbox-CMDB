@@ -4,8 +4,6 @@
   hosts: all
   gather_facts: false
   connection: local
-  vars:
-    facts: "_facts_{{ inventory_hostname | regex_replace('-') }}"
   tasks:
     - include_vars: main.yml
 
@@ -19,14 +17,9 @@
       debug:
         var: _facts_{{ inventory_hostname | regex_replace('-') }}.ansible_facts.ansible_net_system
 
-
     - name: Debug 2
       debug:
         var: _facts
-
-    - name: Debug 3
-      debug:
-        var: facts
 
     - name: Push site data to Netbox
       netbox.netbox.netbox_site:

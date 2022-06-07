@@ -26,6 +26,10 @@
       delegate_to: localhost
       throttle: 1
 
+    - name: Debug 2
+      debug:
+        var: _fact
+
     - name: Push device type data to Netbox
       netbox.netbox.netbox_device_type:
         netbox_url: "{{ net_netbox_url }}"

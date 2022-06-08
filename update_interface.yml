@@ -6,25 +6,21 @@
   tasks:
     - include_vars: main.yml
 
-    - debug:
+    - name: Debug Netbox data structure
+      debug:
         msg: "{{ data }}" 
 
-    - debug:
-        msg: "{{ device }}, {{ interface }}, {{ vlan_id }}, {{ vlan_name }}, {{ event }}, {{ timestamp }}" 
+    - name: Debug Netbox relevant variables
+      debug:
+        msg: "{{ device }}, {{ interface }}, {{ vlan_id }}, {{ vlan_name }}, {{ event }}, {{ timestamp }}, {{ data }}" 
 
+    - name: Cisco IOS Add VLAN to l2 interface on {{ device }}
+      cisco.ios.ios_l2_interfaces:
+        config:
+          - name: "{{ interface }}"
+            mode: access
+            access:
+              vlan: "{{ vlan_id }}"
+        state: merged
+      become: true
 
-
-
-    # - name: Push interfaces data to Netbox
-    #   netbox.netbox.netbox_device_interface:
-    #     netbox_url: "{{ net_netbox_url }}"
-    #     netbox_token: "{{ net_netbox_token }}"
-    #     validate_certs: no
-    #     data: 
-    #       device: "{{ inventory_hostname }}"
-    #       name: "{{ item.name }}"
-    #       type: "Virtual"
-    #       description: "{{ item.name }} description"
-    #     state: present
-    #   loop: "{{ _facts.ansible_facts.ansible_network_resources.interfaces }}"
-    #   throttle: 1

@@ -1,22 +1,13 @@
 ---
 
-# On Ansible:
-# On the Template, set Variables "Prompt on launch" checkbox 
-# Example: https://medium.com/@stephenpaynter/netbox-webhooks-with-ansible-tower-eaa6dd98320
-
-
-
-# On Netbox
-# User icon -> Admin -> Webhooks -> Add (DCIM->Interface, Enabled)
-
-
-
-
 - name: Update interface vlan configs, triggered by Netbox changes
   hosts: localhost
   gather_facts: false
   tasks:
     - include_vars: main.yml
+
+    - debug:
+        msg: "{{ data }}" 
 
     - debug:
         msg: "{{ interface_name }}, {{ interface_id }}, {{ event }}, {{ timestamp }}, {{ data }}, {{ limit }}" 

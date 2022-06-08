@@ -14,6 +14,7 @@ On Netbox
 
 Netbox Data Model
 
+VLANs
 {
 'id': 4333,
 'url': '/api/dcim/interfaces/4333/', 
@@ -51,3 +52,6 @@ Netbox Data Model
   },
   "limit": "{{ data['device']['name'] }}"
 }
+
+IP
+

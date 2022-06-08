@@ -39,3 +39,4 @@
         config:
         - name: "{{ interface }}"
           description: "{{ description }}"
+      become: true

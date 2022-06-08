@@ -119,7 +119,7 @@
           site: "{{ site }}"
           serial: "{{ _facts.ansible_facts.ansible_net_serialnum | default(omit) }}"
           device_type: "{{ _facts.ansible_facts.ansible_net_system | default('unknown') }}"
-          device_role: "{{ net_device_role }}"
+          device_role: "router"
           local_context_data: "{{ _facts.ansible_facts.ansible_network_resources }}"
           comments: "Added by AAP"
         state: present

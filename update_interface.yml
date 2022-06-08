@@ -10,7 +10,8 @@
         msg: "{{ data }}" 
 
     - debug:
-        msg: "{{ interface_name }}, {{ interface_id }}, {{ event }}, {{ timestamp }}, {{ data }}, {{ limit }}" 
+        msg: "{{ device }}, {{ interface }}, {{ vlan_id }}, {{ vlan_name }}, {{ event }}, {{ timestamp }}" 
+
 
 
 

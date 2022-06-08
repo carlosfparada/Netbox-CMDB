@@ -1,7 +1,9 @@
 ---
 
 # On the tenplate, set Variables "Prompt on launch" checkbox 
-- name: Update interfaces triggered by Netbox changes
+# Example: https://medium.com/@stephenpaynter/netbox-webhooks-with-ansible-tower-eaa6dd98320
+
+- name: Update interface configs triggered by Netbox changes
   hosts: localhost
   gather_facts: false
   tasks:

@@ -1,0 +1,19 @@
+- name: Collect Cisco IOS, NXOS and Arista EOS Facts and Push to Netbox
+  hosts: localhost
+  gather_facts: false
+  tasks:
+    - include_vars: main.yml
+
+    - name: Push interfaces data to Netbox
+      netbox.netbox.netbox_device_interface:
+        netbox_url: "{{ net_netbox_url }}"
+        netbox_token: "{{ net_netbox_token }}"
+        validate_certs: no
+        data: 
+          device: "{{ inventory_hostname }}"
+          name: "{{ item.name }}"
+          type: "Virtual"
+          description: "{{ item.name }} description"
+        state: present
+      loop: "{{ _facts.ansible_facts.ansible_network_resources.interfaces }}"
+      throttle: 1

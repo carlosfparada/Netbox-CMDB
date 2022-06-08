@@ -1,4 +1,7 @@
-- name: Collect Cisco IOS, NXOS and Arista EOS Facts and Push to Netbox
+---
+
+# On the tenplate, set Variables "Prompt on launch" checkbox 
+- name: Update interfaces triggered by Netbox changes
   hosts: localhost
   gather_facts: false
   tasks:

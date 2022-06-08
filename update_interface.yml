@@ -1,9 +1,10 @@
 ---
 
 - name: Update interface vlan configs, triggered by Netbox changes
-  hosts: localhost
-  ansible_connection: network_cli
+  hosts: "{{ device }}"
   gather_facts: false
+  vars:
+    ansible_connection: network_cli
   tasks:
     - include_vars: main.yml
 

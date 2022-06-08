@@ -14,16 +14,6 @@
       debug:
         msg: "{{ device }}, {{ interface }}, {{ ip_address }}, {{ address_family }}, {{ description }}, {{ event }}, {{ timestamp }}, {{ data }}" 
 
-    # - name: Cisco IOS Add VLAN to l2 interface on {{ device }}
-    #   cisco.ios.ios_l2_interfaces:
-    #     config:
-    #       - name: "{{ interface }}"
-    #         mode: access
-    #         access:
-    #           vlan: "{{ vlan_id }}"
-    #     state: merged
-    #   become: true
-
     - name: Cisco IOS update IPv4 to l3 interface on {{ device }}
       cisco.ios.ios_l3_interfaces:
         config: 
@@ -44,9 +34,8 @@
       become: true
       when: address_family == 6
 
-- name: Cisco IOS update description to interface on {{ device }}
-  cisco.ios.ios_interfaces:
-    config:
-    - name: "{{ interface }}"
-      description: "{{ description }}"
-      
+    - name: Cisco IOS update description to interface on {{ device }}
+      cisco.ios.ios_interfaces:
+        config:
+        - name: "{{ interface }}"
+          description: "{{ description }}"

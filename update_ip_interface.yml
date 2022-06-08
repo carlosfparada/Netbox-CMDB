@@ -22,17 +22,17 @@
             - address: "{{ ip_address }}"
         state: merged
       become: true
-      when: address_family == 4
+      when: address_family == '4'
 
     - name: Cisco IOS update IPv6 to l3 interface on {{ device }}
       cisco.ios.ios_l3_interfaces:
         config: 
           - name: "{{ interface }}"
-            ipv4:
+            ipv6:
             - address: "{{ ip_address }}"
         state: merged
       become: true
-      when: address_family == 6
+      when: address_family == '6'
 
     - name: Cisco IOS update description to interface on {{ device }}
       cisco.ios.ios_interfaces:

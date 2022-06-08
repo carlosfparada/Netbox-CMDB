@@ -14,7 +14,7 @@
       debug:
         msg: "{{ device }}, {{ interface }}, {{ vlan_id }}, {{ vlan_name }}, {{ event }}, {{ timestamp }}, {{ data }}" 
 
-    - name: Cisco IOS Add VLAN to l2 interface on {{ device }}
+    - name: Cisco IOS update VLAN to l2 interface on {{ device }}
       cisco.ios.ios_l2_interfaces:
         config:
           - name: "{{ interface }}"

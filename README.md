@@ -12,9 +12,13 @@ On Netbox
 - User icon -> Profile -> API Tokens
 - User icon -> Admin -> Webhooks -> Add (DCIM->Interface, Enabled)
 
-Netbox Data Model
 
-VLANs
+
+Netbox Data Model
+##################
+
+VLANs:
+
 {
 'id': 4333,
 'url': '/api/dcim/interfaces/4333/', 
@@ -55,3 +59,44 @@ VLANs
 
 IP
 
+{
+'id': 631,
+'url': '/api/ipam/ip-addresses/631/',
+'family': OrderedDict([('value', 4), ('label', 'IPv4')]),
+'address': '12.1.1.1/24',
+'vrf': None,
+'tenant': None,
+'status': OrderedDict([('value', 'active'), ('label', 'Active')]),
+'role': None,
+'assigned_object_type': 'dcim.interface',
+'assigned_object_id': 4343,
+'assigned_object': {'id': 4343, 'url': '/api/dcim/interfaces/4343/',
+    'device': OrderedDict([('id', 320), ('url', '/api/dcim/devices/320/'), ('name', 'ios-rt2'), ('display_name', 'ios-rt2')]),
+    'name': 'Ethernet0/1',
+    'cable': None,
+    'connection_status': None
+    },
+'nat_inside': None,
+'nat_outside': None,
+'dns_name': '',
+'description': '12.1.1.1/24 description',
+'tags': [],
+'custom_fields': {},
+'created': '2022-06-08',
+'last_updated': '2022-06-08T14:04:45.065029Z'
+}
+
+{ 
+ "extra_vars": 
+  {
+     "device": "{{ data['assigned_object']['device']['name'] }}",
+     "interface": "{{ data['assigned_object']['name'] }}",
+     "ip_address": "{{ data['address'] }}",
+     "address_family": "{{ data['family']['value'] }}",
+     "description": "{{ data['description'] }}",
+     "event": "{{ event }}",
+     "timestamp": "{{ timestamp }}",
+     "data": "{{ data }}"
+  },
+  "limit": "{{ data['assigned_object']['device']['name'] }}"
+}

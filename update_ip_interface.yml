@@ -1,8 +1,7 @@
 ---
 
 - name: Update interface vlan configs, triggered by Netbox changes
-  hosts: localhost 
-  # "{{ device }}"
+  hosts: "{{ device }}"
   gather_facts: false
   tasks:
     - include_vars: main.yml
@@ -13,15 +12,15 @@
 
     - name: Debug Netbox relevant variables
       debug:
-        msg: "{{ device }}, {{ interface }}, {{ vlan_id }}, {{ vlan_name }}, {{ event }}, {{ timestamp }}, {{ data }}" 
+        msg: "{{ device }}, {{ interface }}, {{ ip_address }}, {{ address_family }}, {{ description }}, {{ event }}, {{ timestamp }}, {{ data }}" 
 
-    - name: Cisco IOS Add VLAN to l2 interface on {{ device }}
-      cisco.ios.ios_l2_interfaces:
-        config:
-          - name: "{{ interface }}"
-            mode: access
-            access:
-              vlan: "{{ vlan_id }}"
-        state: merged
-      become: true
+    # - name: Cisco IOS Add VLAN to l2 interface on {{ device }}
+    #   cisco.ios.ios_l2_interfaces:
+    #     config:
+    #       - name: "{{ interface }}"
+    #         mode: access
+    #         access:
+    #           vlan: "{{ vlan_id }}"
+    #     state: merged
+    #   become: true
 

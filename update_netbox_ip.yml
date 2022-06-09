@@ -1,6 +1,6 @@
 ---
 
-- name: Collect Cisco IOS, NXOS and Arista EOS Facts and Push to Netbox
+- name: Update Netbox IP, triggered by router IP config changes
   hosts: all
   gather_facts: false
   tasks:

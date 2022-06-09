@@ -100,3 +100,22 @@ IP
   },
   "limit": "{{ data['assigned_object']['device']['name'] }}"
 }
+
+
+SYSLOG
+
+ios-rt2:
+
+logging buffered warnings
+logging trap debugging
+logging origin-id hostname
+logging host 172.16.1.60 vrf mgmt
+archive
+ log config
+  logging enable
+  notify syslog
+
+# test
+interface Ethernet0/2
+
+

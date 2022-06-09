@@ -104,8 +104,16 @@ IP
 
 SYSLOG
 
-ios-rt2:
+rsyslog:
 
+vim /etc/rsyslog.d/50-default.conf
+local7.*                        -/var/log/ios-rt2.log
+
+
+
+
+
+ios-rt2:
 logging buffered warnings
 logging trap debugging
 logging origin-id hostname
@@ -117,5 +125,7 @@ archive
 
 # test
 interface Ethernet0/2
+ ip address 3.3.3.3 255.255.255.0
+ no shutdown
 
 

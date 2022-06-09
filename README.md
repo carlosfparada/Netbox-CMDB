@@ -104,16 +104,18 @@ IP
 
 SYSLOG
 
-rsyslog:
+syslog-ng:
 
-vim /etc/rsyslog.d/50-default.conf
-local7.*                        -/var/log/ios-rt2.log
+
 
 
 
 
 
 ios-rt2:
+Docs: 
+
+
 logging buffered warnings
 logging trap debugging
 logging origin-id hostname

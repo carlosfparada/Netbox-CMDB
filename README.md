@@ -19,7 +19,7 @@ Netbox Data Model
 
 VLANs:
 
-{
+data {
 'id': 4333,
 'url': '/api/dcim/interfaces/4333/', 
 'device': OrderedDict([('id', 318), ('url', '/api/dcim/devices/318/'), ('name', 'ios-sw1'), ('display_name', 'ios-sw1')])
@@ -59,7 +59,7 @@ VLANs:
 
 IP
 
-{
+data {
 'id': 631,
 'url': '/api/ipam/ip-addresses/631/',
 'family': OrderedDict([('value', 4), ('label', 'IPv4')]),

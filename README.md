@@ -117,7 +117,7 @@ Docs:
 
 
 logging buffered warnings
-logging trap debugging
+logging trap informational
 logging origin-id hostname
 logging host 172.16.1.60 vrf mgmt
 # only needed to log every config command

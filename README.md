@@ -102,19 +102,10 @@ data {
 }
 
 
-SYSLOG
-
-syslog-ng:
-
-
-
-
-
-
+SYSLOG-NG
 
 ios-rt2:
 Docs: 
-
 
 logging buffered warnings
 logging trap informational
@@ -131,4 +122,76 @@ interface Ethernet0/2
  ip address 3.3.3.3 255.255.255.0
  no shutdown
 
+
+
+syslog-ng:
+
+ource s_net {
+        udp( ip(0.0.0.0) port(514) );
+};
+
+destination d_netsyslog {
+        file("/var/log/net-syslog" owner("root") group("adm") perm (0640));
+};
+
+destination d_controller32 {
+  http(
+        url("https://172.16.1.32/api/v2/job_templates/13/launch/")
+        method("POST")
+        tls(
+          peer-verify(no)
+        )
+        user-agent("syslog-ng-trigger")
+        headers("Content-Type: application/json", "Accept: */*", "Authorization: Bearer 0vN27zhftZUoERyQLK0eisUev2zK7G")
+        body('{"extra_vars": {"foo": "bar"}, "limit": "${HOST}"}')
+ );
+};
+
+destination d_controller34 {
+  http(
+        url("https://172.16.1.34/api/v2/job_templates/119/launch/")
+        method("POST")
+        tls(
+          peer-verify(no)
+        )
+        user-agent("syslog-ng-trigger")
+        headers("Content-Type: application/json", "Accept: */*", "Authorization: Bearer zdfy7plqUzJWdm58gOA1PCJJ9okKcn")
+        body('{"extra_vars": {"device": "$HOST"}, "limit": "$HOST"}')
+ );
+};
+
+filter cisco_rt1 {
+        host("172.16.1.151") or host("ios-rt1");
+};
+
+filter cisco_rt2 {
+        host("172.16.1.152") or host("ios-rt2");
+};
+
+filter msg_cisco_rt1 {
+        match(".*from console by cisco.*" value("MESSAGE"))
+};
+
+filter msg_cisco_rt2 {
+        match('%SYS-5-CONFIG_I: Configured from console by console' value("MESSAGE"))
+};
+
+log {
+        source(s_net);
+        filter(cisco_rt1);
+        filter(msg_cisco_rt1);
+        destination(d_controller32);
+};
+
+log {
+        source(s_net);
+        filter(cisco_rt2);
+        filter(msg_cisco_rt2);
+        destination(d_controller34);
+};
+
+log {
+        source(s_net);
+        destination(d_netsyslog);
+};
 

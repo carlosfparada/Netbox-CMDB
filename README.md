@@ -17,7 +17,7 @@ On Netbox
 Netbox Data Model
 ##################
 
-VLANs:
+Interfaces:
 
 data {
 'id': 4333,

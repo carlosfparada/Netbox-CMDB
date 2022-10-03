@@ -135,7 +135,6 @@
           name: "{{ item.name }}"
           type: "Virtual"
           description: "{{ item.name }} description"
-          enabled: "{{ item.enabled }}"
         state: present
       loop: "{{ _facts.ansible_facts.ansible_network_resources.interfaces }}"
       throttle: 1

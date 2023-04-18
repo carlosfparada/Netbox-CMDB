@@ -16,7 +16,7 @@
     - name: IOS gatthering facts
       block:
       - name: IOS facts
-        connection: local
+        #connection: local
         cisco.ios.ios_facts:
           gather_subset:
             - hardware
@@ -41,7 +41,7 @@
     - name: NXOS gatthering facts
       block:
       - name: NXOS facts
-        connection: local
+        #connection: local
         cisco.nxos.nxos_facts:
           gather_subset:
             - hardware
@@ -65,7 +65,7 @@
     - name: EOS gatthering facts
       block:
       - name: EOS facts
-        connection: local
+        #connection: local
         arista.eos.eos_facts:
           gather_subset: all
           #gather_network_resources: all

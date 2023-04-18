@@ -5,7 +5,7 @@
   gather_facts: false
   vars:
     ansible_command_timeout: 300
-    ssh_type=paramiko
+    ssh_type: paramiko
   tasks:
     - include_vars: main.yml
 

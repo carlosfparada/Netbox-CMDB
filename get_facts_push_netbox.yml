@@ -68,7 +68,7 @@
         #connection: local
         arista.eos.eos_facts:
           gather_subset: all
-          #gather_network_resources: all
+          gather_network_resources: all
         register: _eos_facts
         become: true
       - name: Debug EOS facts

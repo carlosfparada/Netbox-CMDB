@@ -3,6 +3,8 @@
 - name: Collect Cisco IOS, NXOS and Arista EOS Facts and Push to Netbox
   hosts: all
   gather_facts: false
+  vars:
+    ansible_command_timeout: 300
   tasks:
     - include_vars: main.yml
 

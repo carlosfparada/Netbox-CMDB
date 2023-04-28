@@ -24,12 +24,12 @@
             - "interfaces"
             - "l2_interfaces"
             - "l3_interfaces"
-            # - "acl_interfaces"
-            # - "static_routes" 
-            # - "acls" 
+            - "acl_interfaces"
+            - "static_routes" 
+            - "acls" 
             - "vlans"
         register: _ios_facts
-        become: true
+        #become: true
       - name: Debug IOS facts
         debug:
           var: _ios_facts

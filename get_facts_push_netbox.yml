@@ -24,9 +24,9 @@
             - "interfaces"
             - "l2_interfaces"
             - "l3_interfaces"
-            - "acl_interfaces"
-            - "static_routes" 
-            - "acls" 
+            # - "acl_interfaces"
+            # - "static_routes" 
+            # - "acls" 
             - "vlans"
         register: _ios_facts
         become: true
@@ -53,7 +53,7 @@
             - "static_routes" 
             - "acls" 
         register: _nxos_facts
-        become: true
+        #become: true
       - name: Debug NXOS facts
         debug:
           var: _nxos_facts
